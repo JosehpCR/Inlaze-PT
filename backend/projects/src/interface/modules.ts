@@ -4,13 +4,13 @@ import { DatabaseModule } from '../infrastructure/config/database';
 import { ProjectEntity } from '../infrastructure/orm/entities/ProjectEntity';
 import { TypeOrmProjectRepository } from '../infrastructure/orm/repositories/TypeOrmProjectRepository';
 import { ProjectController } from './controllers/ProjectController';
-import { CreateProjectUseCase } from '../application/use-cases/create-project-use-case';
+import { CreateProjectUseCase } from '../application/use-cases/CreateProjectUseCase';
 import { GetProjectsUseCase } from '../application/use-cases/GetProjectsUseCase';
 import { UpdateProjectUseCase } from '../application/use-cases/UpdateProjectUseCase';
 import { DeleteProjectUseCase } from '../application/use-cases/DeleteProjectUseCase';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../infrastructure/guards/JwtAuthGuard';
 
 @Module({
   imports: [

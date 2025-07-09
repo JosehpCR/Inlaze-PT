@@ -5,7 +5,7 @@ import { UpdateProjectUseCase } from '../../application/use-cases/UpdateProjectU
 import { DeleteProjectUseCase } from '../../application/use-cases/DeleteProjectUseCase';
 import { CreateProjectHttpDto } from '../dtos/CreateProjectHttpDto';
 import { UpdateProjectHttpDto } from '../dtos/UpdateProjectHttpDto';
-import { JwtAuthGuard } from '../../infrastructure/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../infrastructure/guards/JwtAuthGuard';
 
 @Controller('api/v1/projects')
 @UseGuards(JwtAuthGuard)

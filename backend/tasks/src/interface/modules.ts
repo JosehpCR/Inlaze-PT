@@ -7,6 +7,7 @@ import { CommentEntity } from '../infrastructure/orm/CommentEntity';
 import { TaskRepository } from '../infrastructure/orm/TaskRepository';
 import { CommentRepository } from '../infrastructure/orm/CommentRepository';
 import { RabbitMqClient } from '../infrastructure/messaging/RabbitMqClient';
+import { TaskEventPublisher } from '../infrastructure/messaging/TaskEventPublisher';
 import { CreateTaskUseCase } from '../application/use-cases/CreateTaskUseCase';
 import { ListTasksUseCase } from '../application/use-cases/ListTasksUseCase';
 import { AssignTaskUseCase } from '../application/use-cases/AssignTaskUseCase';
@@ -24,10 +25,10 @@ import { CommentController } from './controllers/CommentController';
   providers: [
     TaskRepository,
     CommentRepository,
+    { provide: 'ITaskEventPublisher', useClass: TaskEventPublisher },
     CreateTaskUseCase,
     ListTasksUseCase,
     AssignTaskUseCase,
     AddCommentUseCase,
   ],
-})
-export class TasksModule {}
+})export class TasksModule {}
