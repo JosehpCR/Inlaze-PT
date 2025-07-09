@@ -3,10 +3,12 @@ import { Title } from '../value-objects/Title';
 import { DueDate } from '../value-objects/DueDate';
 import { TaskStatus } from '../value-objects/TaskStatus';
 import { UserId } from '../value-objects/UserId';
+import { ProjectId } from '../value-objects/ProjectId';
 
 export class Task {
   constructor(
     public readonly id: TaskId,
+    public readonly projectId: ProjectId,
     public title: Title,
     public description: string,
     public dueDate: DueDate,

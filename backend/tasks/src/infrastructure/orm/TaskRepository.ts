@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { ITaskRepository } from '../../domain/repositories/ITaskRepository';
 import { Task } from '../../domain/entities/Task';
 import { TaskEntity } from './TaskEntity';
-import { TaskId, Title, DueDate, TaskStatus } from '../../domain/value-objects';
+import { TaskId, Title, DueDate, TaskStatus, ProjectId, UserId } from '../../domain/value-objects';
 
 @Injectable()
 export class TaskRepository implements ITaskRepository {
@@ -15,39 +15,41 @@ export class TaskRepository implements ITaskRepository {
 
   async save(task: Task): Promise<void> {
     const ent = this.repo.create({
-      id: task.id.value,
-      projectId: task.projectId.value,
+      id: task.id.toString(),
+      projectId: task.projectId.toString(),
       title: task.title.value,
       description: task.description,
       dueDate: task.dueDate.value,
       status: task.status,
-      assignedTo: task.assignedTo?.value,
+      assignedTo: task.assignedTo?.toString(),
     });
     await this.repo.save(ent);
   }
 
   async findById(id: TaskId): Promise<Task | null> {
-    const ent = await this.repo.findOneBy({ id: id.value });
+    const ent = await this.repo.findOneBy({ id: id.toString() });
     if (!ent) return null;
     return new Task(
-      new TaskId(ent.id),
+      TaskId.fromString(ent.id),
+      ProjectId.fromString(ent.projectId),
       new Title(ent.title),
       ent.description,
       new DueDate(ent.dueDate),
       ent.status as TaskStatus,
-      ent.assignedTo ? new UserId(ent.assignedTo) : undefined,
+      ent.assignedTo ? UserId.fromString(ent.assignedTo) : undefined,
     );
   }
 
   async findByProject(projectId: ProjectId): Promise<Task[]> {
-    const ents = await this.repo.findBy({ projectId: projectId.value });
+    const ents = await this.repo.findBy({ projectId: projectId.toString() });
     return ents.map(ent => new Task(
-      new TaskId(ent.id),
+      TaskId.fromString(ent.id),
+      ProjectId.fromString(ent.projectId),
       new Title(ent.title),
       ent.description,
       new DueDate(ent.dueDate),
       ent.status as TaskStatus,
-      ent.assignedTo ? new UserId(ent.assignedTo) : undefined,
+      ent.assignedTo ? UserId.fromString(ent.assignedTo) : undefined,
     ));
   }
 }
