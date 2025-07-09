@@ -9,20 +9,22 @@ export class CreateTaskUseCase {
 
   async execute(input: CreateTaskDto): Promise<TaskDto> {
     const id = TaskId.generate();
-    const projId = new ProjectId(input.projectId);
-    const task = new Task(id,
+    const projId = ProjectId.fromString(input.projectId);
+    const task = new Task(
+      id,
+      projId,
       new Title(input.title),
       input.description,
       new DueDate(new Date(input.dueDate)),
-      TaskStatus.PENDING
+      TaskStatus.PENDING,
     );
     await this.repo.save(task);
     return {
-      id: id.value,
-      projectId: projId.value,
+      id: id.toString(),
+      projectId: projId.toString(),
       title: task.title.value,
       description: task.description,
-      dueDate: task.dueDate.value.toISOString(),
+      dueDate: task.dueDate.toISOString(),
       status: task.status,
     };
   }
