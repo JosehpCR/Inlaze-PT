@@ -8,6 +8,7 @@ import { TaskRepository } from '../infrastructure/orm/TaskRepository';
 import { CommentRepository } from '../infrastructure/orm/CommentRepository';
 import { RabbitMqClient } from '../infrastructure/messaging/RabbitMqClient';
 import { TaskEventPublisher } from '../infrastructure/messaging/TaskEventPublisher';
+import { DatabaseModule } from '../infrastructure/config/database';
 import { CreateTaskUseCase } from '../application/use-cases/CreateTaskUseCase';
 import { ListTasksUseCase } from '../application/use-cases/ListTasksUseCase';
 import { AssignTaskUseCase } from '../application/use-cases/AssignTaskUseCase';
@@ -18,6 +19,7 @@ import { CommentController } from './controllers/CommentController';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration], envFilePath: '.env' }),
+    DatabaseModule,
     TypeOrmModule.forFeature([TaskEntity, CommentEntity]),
     RabbitMqClient,
   ],
