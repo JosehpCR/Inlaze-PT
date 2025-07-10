@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { login } from './api';
+import { login, register } from './api';
 import { useAuth } from '@/store/authSlice';
 
 export const useLogin = () => {
@@ -12,5 +12,12 @@ export const useLogin = () => {
         setToken(data.accessToken);
       }
     },
+  });
+};
+
+export const useRegister = () => {
+  return useMutation({
+    mutationFn: (data: { email: string; password: string }) =>
+      register(data.email, data.password),
   });
 };
