@@ -9,6 +9,7 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 export const metadata: Metadata = {
   title: 'Inlaze Task Manager',
   description: 'Dashboard',
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
