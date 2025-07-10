@@ -5,3 +5,4 @@ export { UserId }      from './UserId';
 export { DueDate }     from './DueDate';
 export { Title }       from './Title';
 export { TaskStatus }  from './TaskStatus';
+export { isValidTaskStatus }  from './TaskStatus';

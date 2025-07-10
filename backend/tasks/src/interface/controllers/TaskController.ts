@@ -15,7 +15,7 @@ export class TaskController {
     private readonly createTask: CreateTaskUseCase,
     private readonly listTasks: ListTasksUseCase,
     private readonly assignTask: AssignTaskUseCase,
-    private readonly updateStatus: UpdateTaskStatusUseCase,
+    private readonly updateTaskStatus: UpdateTaskStatusUseCase,
   ) {}
 
   @Post()
@@ -38,6 +38,6 @@ export class TaskController {
     @Param('id') id: string,
     @Body() dto: UpdateTaskStatusHttpDto,
   ) {
-    return this.updateStatus.execute({ taskId: id, status: dto.status });
+    return this.updateTaskStatus.execute({ taskId: id, status: dto.status });
   }
 }
