@@ -8,8 +8,8 @@ export const useLogin = () => {
     mutationFn: (data: { email: string; password: string }) =>
       login(data.email, data.password),
     onSuccess: (data) => {
-      if (data?.token) {
-        setToken(data.token);
+      if (data?.accessToken) {
+        setToken(data.accessToken);
       }
     },
   });
