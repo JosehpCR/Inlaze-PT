@@ -1,8 +1,9 @@
+'use client';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { NextUIProvider } from '@nextui-org/react';
-import { theme } from '@/styles/themes';
+//import { theme } from '@/styles/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SocketToast } from '@/components/feedback/Toast';
 import { ReactNode } from 'react';
@@ -22,7 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <QueryClientProvider client={queryClient}>
-          <NextUIProvider theme={theme}>
+          <NextUIProvider>
             {children}
             <SocketToast />
           </NextUIProvider>
