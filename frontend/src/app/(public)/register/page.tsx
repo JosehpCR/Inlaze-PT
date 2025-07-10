@@ -1,21 +1,19 @@
 'use client';
-import { useLogin } from '@/features/auth/hooks';
+import { useRegister } from '@/features/auth/hooks';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
-  const login = useLogin();
+  const register = useRegister();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const res = await login.mutateAsync({ email, password });
-    if (res?.accessToken) {
-      router.push('/dashboard');
-    }
+    await register.mutateAsync({ email, password });
+    router.push('/login');
   };
 
   return (
@@ -35,10 +33,10 @@ export default function LoginPage() {
         className="border p-2"
       />
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-        Login
+        Register
       </button>
       <p className="text-center">
-        Don't have an account? <Link href="/register">Register</Link>
+        Already have an account? <Link href="/login">Login</Link>
       </p>
     </form>
   );
