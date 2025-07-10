@@ -12,7 +12,7 @@ export default function LoginPage() {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const res = await login.mutateAsync({ email, password });
-    if (res?.token) {
+    if (res?.accessToken) {
       router.push('/dashboard');
     }
   };
