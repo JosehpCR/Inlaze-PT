@@ -9,13 +9,13 @@ export class EmailAdapter {
 
   constructor(private readonly config: ConfigService) {
     this.transporter = nodemailer.createTransport({
-      host: this.config.get<string>('smtp.host'),
+      host: this.config.get<string>('smtp.host', 'localhost'),
       auth: {
-        user: this.config.get<string>('smtp.user'),
-        pass: this.config.get<string>('smtp.pass'),
+        user: this.config.get<string>('smtp.user', 'user'),
+        pass: this.config.get<string>('smtp.pass', 'pass'),
       },
     });
-    this.from = this.config.get<string>('smtp.from');
+    this.from = this.config.get<string>('smtp.from', 'no-reply@example.com');
   }
 
   async sendMail(to: string, subject: string, html: string): Promise<void> {
