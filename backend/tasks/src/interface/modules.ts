@@ -13,6 +13,7 @@ import { CreateTaskUseCase } from '../application/use-cases/CreateTaskUseCase';
 import { ListTasksUseCase } from '../application/use-cases/ListTasksUseCase';
 import { AssignTaskUseCase } from '../application/use-cases/AssignTaskUseCase';
 import { AddCommentUseCase } from '../application/use-cases/AddCommentUseCase';
+import { UpdateTaskStatusUseCase } from '../application/use-cases/UpdateTaskStatusUseCase';
 import { TaskController } from './controllers/TaskController';
 import { CommentController } from './controllers/CommentController';
 
@@ -31,6 +32,7 @@ import { CommentController } from './controllers/CommentController';
     CreateTaskUseCase,
     ListTasksUseCase,
     AssignTaskUseCase,
+    UpdateTaskStatusUseCase,
     AddCommentUseCase,
   ],
 })

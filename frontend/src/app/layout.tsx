@@ -1,6 +1,7 @@
 import './globals.css'
 import { Geist_Mono } from 'next/font/google'
 import { Providers } from '@/components/Providers'
+import type { Metadata } from 'next'
 
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
 
