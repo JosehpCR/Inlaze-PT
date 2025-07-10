@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  auth:
+    build: ./backend/auth
+    env_file:
+      - ./backend/auth/.env
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+
+  projects:
+    build: ./backend/projects
+    env_file:
+      - ./backend/projects/.env
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+
+  tasks:
+    build: ./backend/tasks
+    env_file:
+      - ./backend/tasks/.env
+    depends_on:
+      - db
+      - rabbitmq
+    ports:
+      - "3002:3002"
+
+  notifications:
+    build: ./backend/notifications
+    env_file:
+      - ./backend/notifications/.env
+    depends_on:
+      - rabbitmq
+    ports:
+      - "3004:3004"
+
+  frontend:
+    build: ./frontend
+    env_file:
+      - ./frontend/.env.local
+    depends_on:
+      - auth
+    ports:
+      - "3003:3000"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./infra/db-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+  db_data:
