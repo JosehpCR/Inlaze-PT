@@ -2,9 +2,12 @@ import { ITaskRepository } from '../../domain/repositories/ITaskRepository';
 import { TaskDto } from '../dtos/TaskDto';
 import { TaskId } from '../../domain/value-objects/TaskId';
 import { UserId } from '../../domain/value-objects/UserId';
+import { Inject } from '@nestjs/common';
 
 export class AssignTaskUseCase {
-  constructor(private readonly repo: ITaskRepository) {}
+  constructor(
+    @Inject('ITaskRepository') private readonly repo: ITaskRepository,
+  ) {}
 
   async execute(input: { taskId: string; userId: string }): Promise<TaskDto> {
     const id = TaskId.fromString(input.taskId);

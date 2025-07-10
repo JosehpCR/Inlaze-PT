@@ -25,12 +25,13 @@ import { CommentController } from './controllers/CommentController';
   ],
   controllers: [TaskController, CommentController],
   providers: [
-    TaskRepository,
-    CommentRepository,
+    { provide: 'ITaskRepository', useClass: TaskRepository },
+    { provide: 'ICommentRepository', useClass: CommentRepository },
     { provide: 'ITaskEventPublisher', useClass: TaskEventPublisher },
     CreateTaskUseCase,
     ListTasksUseCase,
     AssignTaskUseCase,
     AddCommentUseCase,
   ],
-})export class TasksModule {}
+})
+export class TasksModule {}
