@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from '../infrastructure/config/database';
+import configuration from '../infrastructure/config/configuration';
 import { ProjectEntity } from '../infrastructure/orm/entities/ProjectEntity';
 import { TypeOrmProjectRepository } from '../infrastructure/orm/repositories/TypeOrmProjectRepository';
 import { ProjectController } from './controllers/ProjectController';
@@ -11,18 +12,19 @@ import { DeleteProjectUseCase } from '../application/use-cases/DeleteProjectUseC
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from '../infrastructure/guards/JwtAuthGuard';
+import { JwtStrategy } from '../infrastructure/auth/jwt.strategy';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, load: [configuration], envFilePath: '.env' }),
     DatabaseModule,
     TypeOrmModule.forFeature([ProjectEntity]),
     JwtModule.registerAsync({
-      useFactory: (config) => ({
-        secret: config.get('jwt.secret'),
-        signOptions: { expiresIn: config.get('jwt.expiresIn') },
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('jwt.secret'),
+        signOptions: { expiresIn: config.get<string>('jwt.expiresIn') },
       }),
-      inject: [ConfigModule],
     }),
   ],
   controllers: [ProjectController],
@@ -34,8 +36,9 @@ import { JwtAuthGuard } from '../infrastructure/guards/JwtAuthGuard';
     GetProjectsUseCase,
     UpdateProjectUseCase,
     DeleteProjectUseCase,
-    // Guard
+    // Auth
     JwtAuthGuard,
+    JwtStrategy,
   ],
 })
 export class ProjectModule {}
