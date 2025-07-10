@@ -8,7 +8,7 @@ import { Inject } from '@nestjs/common';
 
 export class CreateTaskUseCase {
   constructor(
-    private readonly repo: ITaskRepository,
+    @Inject('ITaskRepository') private readonly repo: ITaskRepository,
     @Inject('ITaskEventPublisher') private readonly events: ITaskEventPublisher,
   ) {}
 
